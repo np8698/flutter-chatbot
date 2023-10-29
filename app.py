@@ -18,6 +18,7 @@ words = pickle.load(open("words.pkl", "rb"))
 classes = pickle.load(open("classes.pkl", "rb"))
 
 app = Flask(__name__)
+# run_with_ngrok(app) 
 
 @app.route("/")
 def home():
@@ -27,7 +28,6 @@ def home():
 @app.route("/get", methods=["POST"])
 def chatbot_response():
     msg = request.form["msg"]
-    #checks is a user has given a name, in order to give a personalized feedback
     if msg.startswith('my name is'):
         name = msg[11:]
         ints = predict_class(msg, model)
@@ -38,7 +38,6 @@ def chatbot_response():
         ints = predict_class(msg, model)
         res1 = getResponse(ints, intents)
         res =res1.replace("{n}",name)
-    #if no name is passed execute normally
     else:
         ints = predict_class(msg, model)
         res = getResponse(ints, intents)
