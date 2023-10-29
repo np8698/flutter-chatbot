@@ -89,7 +89,7 @@ def getResponse(ints, intents_json):
         if i["tag"] == tag:
             result = random.choice(i["responses"])
             break
-    return result
+    return json.encoder({"response":result})
 
 
 if __name__ == "__main__":
