@@ -19,8 +19,6 @@ classes = pickle.load(open("classes.pkl", "rb"))
 
 app = Flask(__name__)
 
-
-
 @app.route("/get", methods=["POST"])
 def chatbot_response():
     msg = request.form["msg"]
@@ -86,7 +84,12 @@ def getResponse(ints, intents_json):
         if i["tag"] == tag:
             result = random.choice(i["responses"])
             break
-    return json.encoder({"response":result})
+    return result
+
+def chatbot_response(msg):
+    ints = predict_class(msg, model)
+    res = getResponse(ints, intents)
+    return res
 
 
 if __name__ == "__main__":
